@@ -10,6 +10,11 @@
       "StackName": "amplify-slyngshot-staging-174537",
       "StackId": "arn:aws:cloudformation:us-east-1:859491751963:stack/amplify-slyngshot-staging-174537/68f7b6a0-9e6a-11ed-83ef-0a389b06e125",
       "AmplifyAppId": "dqdii7zzr7pge"
+    },
+    "categories": {
+      "auth": {
+        "slyngshot5bdc53a0": {}
+      }
     }
   }
 }
