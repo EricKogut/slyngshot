@@ -1,3 +1,3 @@
-import Test from './test';
+import { Test } from './Test';
 
 export default Test;
