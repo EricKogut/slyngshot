@@ -14,10 +14,7 @@ import { connectDB } from './db';
 const port = process.env.PORT || 5000;
 import bodyParser from 'body-parser';
 
-import { describeIndex } from './clients/pinecone/Pinecone.client';
-import { generate } from './clients/cohere/Cohere.client';
-console.log("before gene")
-generate()
+
 var cors = require('cors');
 app.use(
   cors({

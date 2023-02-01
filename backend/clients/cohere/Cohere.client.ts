@@ -1,25 +1,25 @@
 import axios from 'axios';
 import cohere from 'cohere-ai';
 
-export const generate = async () => {
-  console.log('genenenakjfannnnnnnipsgene');
-
+declare type GeneratePrompts = {
+  prompt: string;
+  max;
+};
+export const generate = async (params: GeneratePrompts) => {
   cohere.init(process.env.COHERE_API_KEY || 'null');
 
   // Hit the `generate` endpoint on the `large` model
   const generateResponse = await cohere.generate({
-    prompt: 'Once upon a time in a magical land called',
+    prompt: params.prompt,
     max_tokens: 50,
     temperature: 1,
   });
 
-  console.log(generateResponse.body.generations);
-  /*
-  {
-    statusCode: 200,
-    body: {
-      text: "Eldorado, the anointed monarchs of the ancient world and the ruling family were divided into three kingdoms, each of which was ruled by an individual leader."
-    }
-  }
-  */
+  return generateResponse.body.generations;
+};
+
+export const embed = async () => {
+  cohere.init(process.env.COHERE_API_KEY || 'null');
+  const response = await await cohere.embed({ texts: ['this is a test'] });
+  return response.body.embeddings;
 };

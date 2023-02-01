@@ -2,14 +2,19 @@ import { Router, Request, Response } from 'express';
 import { StatusCodes as statusCodes } from 'http-status-codes';
 // Importing Models
 import { User } from '../models/_index';
-
+import { query } from '../clients/pinecone/Pinecone.client';
+import { embed } from '../clients/cohere/Cohere.client';
 /**
  * @route   GET /users/test
  * @desc    Testing the users route
  * @access  public
  */
-exports.test = (req: Request, res: Response) => {
-  return res.status(200).json({ res: 'User endpoint is running' });
+exports.test = async (req: Request, res: Response) => {
+  const embedding = await embed();
+  console.log(embedding);
+  const result = await query({ topK: 10, filter: embedding });
+  console.log(result, 'is the result');
+  return res.status(200).json({ res: result + 'is the result' });
 };
 
 /**
