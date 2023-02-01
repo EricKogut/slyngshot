@@ -1,14 +1,12 @@
 import { Container } from '../components/base/Container';
 import { DarkModeSwitch } from '../components/base/DarkModeSwitch';
 import { DataFlow } from 'components/DataFlow';
+import { LandingPage } from 'components/landing/LandingPage';
 
 const Index = () => {
   return (
     <>
-      <DataFlow />
-      <Container height='100vh'>
-        <DarkModeSwitch />
-      </Container>
+      <LandingPage />
     </>
   );
 };
