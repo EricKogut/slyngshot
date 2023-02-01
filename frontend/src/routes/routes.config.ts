@@ -21,6 +21,14 @@ const routes: Routes = {
     pattern: '/test',
     page: '/test',
   },
+
+  //////////////////
+  // Dataflow Route(s)
+  //////////////////
+  dataFlow: {
+    pattern: '/dataflows',
+    page: '/dataflows',
+  },
 };
 
 init(routes);
