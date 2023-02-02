@@ -26,6 +26,9 @@ import {
   Input,
 } from '@chakra-ui/react';
 import { CopyIcon, CheckIcon } from '@chakra-ui/icons';
+
+import { useRouter } from 'next/router';
+
 const initBgColor = '#1A192B';
 
 const nodeTypes = {
@@ -35,8 +38,9 @@ export const DataFlow = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [bgColor, setBgColor] = useState(initBgColor);
-
-  const address = 'http://localhost:3001/dataflows/12345678';
+  const router = useRouter();
+  const id = router.query.id;
+  const address = 'http://localhost:3001/dataflows/' + id;
   const { onCopy, setValue, hasCopied } = useClipboard(address || '');
 
   useEffect(() => {
@@ -169,7 +173,7 @@ export const DataFlow = () => {
               <TagLeftIcon boxSize='12px' as={CheckIcon} />
             )}
 
-            <TagLabel>http://localhost:3001/dataflows/12345678</TagLabel>
+            <TagLabel>{address}</TagLabel>
           </Tag>
         ))}
       </HStack>

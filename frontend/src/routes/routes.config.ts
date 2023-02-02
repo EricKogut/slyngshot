@@ -26,8 +26,16 @@ const routes: Routes = {
   // Dataflow Route(s)
   //////////////////
   dataFlow: {
-    pattern: '/dataflows',
-    page: '/dataflows',
+    pattern: '/dataflows/:id',
+    page: '/dataflows/:id',
+  },
+
+  //////////////////
+  // Dataflow Route(s)
+  //////////////////
+  createDataflow: {
+    pattern: '/dataflows/create',
+    page: '/dataflows/create',
   },
 
   //////////////////
