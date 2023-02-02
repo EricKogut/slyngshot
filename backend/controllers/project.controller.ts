@@ -34,6 +34,30 @@ exports.getProjectById = async (req: Request, res: Response) => {
       .json({ error: 'An error occurred while getting project.', err });
   }
 };
+
+
+/**
+ * @route   GET /projects/all
+ * @desc    Retrieve all projects
+ * @param   req.param.id The project id
+ * @access  public
+ */
+exports.getProjects = async (req: Request, res: Response) => {
+  try {
+    const projects = await Project.find({});
+    if (!projects) {
+      res
+        .status(statusCodes.NO_CONTENT)
+        .json({ error: 'Unable to find project.' });
+      return;
+    }
+    res.status(statusCodes.OK).json(projects);
+  } catch (err) {
+    res
+      .status(statusCodes.INTERNAL_SERVER_ERROR)
+      .json({ error: 'An error occurred while getting project.', err });
+  }
+};
 /**
  * @route   POST /projects
  * @desc    Create a new project within the MongoDB

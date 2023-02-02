@@ -16,6 +16,15 @@ export const projectRoutes = () => {
   });
 
   /**
+   * @route   GET projects/all
+   * @desc    Retrieve all projects
+   * @access  public
+   */
+  router.get('/all', (req: Request, res: Response) => {
+    projectController.getProjects(req, res);
+  });
+
+  /**
    * @route   POST projects
    * @desc    Create a new project within the MongoDB
    * @access  public

@@ -37,6 +37,11 @@ const routes: Routes = {
     pattern: '/projects/create',
     page: '/projects/create',
   },
+
+  listProjects: {
+    pattern: '/projects/create',
+    page: '/projects/allProjects',
+  },
 };
 
 init(routes);

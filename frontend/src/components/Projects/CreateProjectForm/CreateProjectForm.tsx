@@ -44,7 +44,7 @@ export const CreateProjectForm = () => {
       createdNewMembership.body
     );
 
-    router.push('/projects');
+    router.push('/projects/allProjects');
   };
 
   return (
