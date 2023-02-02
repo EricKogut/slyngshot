@@ -147,7 +147,7 @@ export const DataFlow = () => {
         <MiniMap />
         <Background />
       </ReactFlow>
-      <Toolbar />
+      <Toolbar setNodes={setNodes} />
     </Container>
   );
 };

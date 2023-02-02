@@ -8,6 +8,7 @@ import {
   MenuOptionGroup,
   MenuDivider,
   Button,
+  Box,
   IconButton,
 } from '@chakra-ui/react';
 import {
@@ -16,11 +17,24 @@ import {
   PlusSquareIcon,
   InfoIcon,
   HamburgerIcon,
+  DeleteIcon,
 } from '@chakra-ui/icons';
+import { useEdgesState, useNodesState } from 'reactflow';
 
-export const Toolbar = () => {
+export const Toolbar = (params: any) => {
+  const removeNodes = () => {
+    params.setNodes([]);
+  };
+
   return (
-    <IconButton position='fixed' bottom={8} left={8} aria-label={''}>
+    <Box
+      bg={'white'}
+      pos='fixed'
+      bottom={8}
+      left={8}
+      aria-label={''}
+      borderRadius={4}
+    >
       <Menu>
         <MenuButton
           as={IconButton}
@@ -35,11 +49,18 @@ export const Toolbar = () => {
           <MenuItem icon={<InfoIcon />} command='⌘E'>
             Embed
           </MenuItem>
-          <MenuItem icon={<HamburgerIcon />} command='⌘⇧P'>
+          <MenuItem
+            icon={<HamburgerIcon />}
+            command='⌘⇧P'
+            onClick={removeNodes}
+          >
             Add Pinecone Database
+          </MenuItem>
+          <MenuItem icon={<DeleteIcon />} command='⌘⇧D' onClick={removeNodes}>
+            Delete all nodes
           </MenuItem>
         </MenuList>
       </Menu>
-    </IconButton>
+    </Box>
   );
 };
