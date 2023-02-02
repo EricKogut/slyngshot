@@ -3,12 +3,10 @@ import cohere from 'cohere-ai';
 
 declare type GeneratePrompts = {
   prompt: string;
-  max;
 };
 export const generate = async (params: GeneratePrompts) => {
   cohere.init(process.env.COHERE_API_KEY || 'null');
 
-  // Hit the `generate` endpoint on the `large` model
   const generateResponse = await cohere.generate({
     prompt: params.prompt,
     max_tokens: 50,
@@ -18,8 +16,11 @@ export const generate = async (params: GeneratePrompts) => {
   return generateResponse.body.generations;
 };
 
-export const embed = async () => {
+declare type GenerateEmbedding = {
+  texts: string[];
+};
+export const embed = async ({ texts }: GenerateEmbedding) => {
   cohere.init(process.env.COHERE_API_KEY || 'null');
-  const response = await await cohere.embed({ texts: ['this is a test'] });
-  return response.body.embeddings;
+  const response = await await cohere.embed({ texts: texts });
+  return response.body.embeddings[0];
 };
