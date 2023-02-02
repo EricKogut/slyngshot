@@ -140,7 +140,6 @@ export const DataFlow = () => {
         nodeTypes={nodeTypes}
         edgeTypes={edgeTypes}
         snapToGrid={true}
-        defaultZoom={1.5}
         fitView
         attributionPosition='bottom-left'
       >

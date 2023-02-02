@@ -29,6 +29,14 @@ const routes: Routes = {
     pattern: '/dataflows',
     page: '/dataflows',
   },
+
+  //////////////////
+  // Project Route(s)
+  //////////////////
+  createProject: {
+    pattern: '/projects/create',
+    page: '/projects/create',
+  },
 };
 
 init(routes);

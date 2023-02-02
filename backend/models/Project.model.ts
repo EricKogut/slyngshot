@@ -9,8 +9,8 @@ interface ProjectDocument extends DocumentDefaults {
 
 const ProjectSchema = new Schema(
   {
-    projectName: { type: Schema.Types.String, required: true},
-    dataFlowIds: [{ type: Schema.Types.String, required: true, unique: true }],
+    projectName: { type: Schema.Types.String, required: true },
+    dataFlowIds: [{ type: Schema.Types.String, required: true }],
   },
   { timestamps: true }
 );

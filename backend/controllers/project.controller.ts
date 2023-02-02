@@ -43,7 +43,7 @@ exports.getProjectById = async (req: Request, res: Response) => {
 exports.createProject = async (req: Request, res: Response) => {
   const newProject = new Project({
     projectName: req.body.projectName,
-    dataFlowIds: [1],
+    dataFlowIds: [],
   });
 
   try {
