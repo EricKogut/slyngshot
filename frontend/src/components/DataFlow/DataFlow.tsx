@@ -12,6 +12,7 @@ import ReactFlow, {
 import ColorSelectorNode from './ColourSelectorNode';
 import CustomEdge from './CustomEdge';
 import 'reactflow/dist/style.css';
+import { Toolbar } from './Toolbar';
 const initBgColor = '#1A192B';
 
 const nodeTypes = {
@@ -144,9 +145,9 @@ export const DataFlow = () => {
         attributionPosition='bottom-left'
       >
         <MiniMap />
-        <Controls />
         <Background />
       </ReactFlow>
+      <Toolbar />
     </Container>
   );
 };
