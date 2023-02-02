@@ -13,6 +13,19 @@ import ColorSelectorNode from './ColourSelectorNode';
 import CustomEdge from './CustomEdge';
 import 'reactflow/dist/style.css';
 import { Toolbar } from './Toolbar';
+import {
+  Tag,
+  TagLabel,
+  TagLeftIcon,
+  TagRightIcon,
+  TagCloseButton,
+  HStack,
+  Kbd,
+  Button,
+  useClipboard,
+  Input,
+} from '@chakra-ui/react';
+import { CopyIcon, CheckIcon } from '@chakra-ui/icons';
 const initBgColor = '#1A192B';
 
 const nodeTypes = {
@@ -23,7 +36,17 @@ export const DataFlow = () => {
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [bgColor, setBgColor] = useState(initBgColor);
 
+  const address = 'http://localhost:3001/dataflows/12345678';
+  const { onCopy, setValue, hasCopied } = useClipboard(address || '');
+
   useEffect(() => {
+    if (address) {
+      setValue(address);
+    }
+  }, [address, setValue]);
+  const placeholder = 'text to be copied...';
+
+  const copyLink = useEffect(() => {
     const onChange = (event: any) => {
       setNodes((nds) =>
         nds.map((node) => {
@@ -130,6 +153,26 @@ export const DataFlow = () => {
 
   return (
     <Container height='100vh'>
+      <HStack spacing={4} margin={2}>
+        <Kbd>Dataflow Enpoint:</Kbd>
+        {['md'].map((size) => (
+          <Tag
+            size={size}
+            key={size}
+            variant='subtle'
+            colorScheme='blue'
+            onClick={onCopy}
+          >
+            {!hasCopied ? (
+              <TagLeftIcon boxSize='12px' as={CopyIcon} />
+            ) : (
+              <TagLeftIcon boxSize='12px' as={CheckIcon} />
+            )}
+
+            <TagLabel>http://localhost:3001/dataflows/12345678</TagLabel>
+          </Tag>
+        ))}
+      </HStack>
       <ReactFlow
         nodes={nodes}
         edges={edges}
