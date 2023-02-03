@@ -6,7 +6,7 @@ import { CONSTANTS } from './constants';
 const pineconeBaseURL = process.env.PINECONE_BASE_URL;
 
 declare type PineconeQuery = {
-  topK: number;
+  topK?: number;
   filter: number[];
 };
 
@@ -22,15 +22,19 @@ export const query = async ({ topK, filter }: PineconeQuery) => {
     },
     data: {
       includeValues: 'false',
-      includeMetadata: 'false',
+      includeMetadata: 'true',
       vector: filter,
-      topK: topK,
+      topK: 10,
     },
   };
 
   try {
     const result = await axios.request(options);
-    return result;
+    let matchString = '';
+    for (const match of result.data.matches) {
+      matchString += match.metadata.text + ' ';
+    }
+    return matchString;
   } catch (error) {
     return error;
   }

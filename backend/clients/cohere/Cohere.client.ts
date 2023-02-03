@@ -2,25 +2,26 @@ import axios from 'axios';
 import cohere from 'cohere-ai';
 
 declare type GeneratePrompts = {
-  prompt: string;
+  data: string;
 };
-export const generate = async (params: GeneratePrompts) => {
+export const generate = async ({ data }: GeneratePrompts) => {
   cohere.init(process.env.COHERE_API_KEY || 'null');
 
   const generateResponse = await cohere.generate({
-    prompt: params.prompt,
-    max_tokens: 50,
-    temperature: 1,
+    prompt: data,
+    max_tokens: 200,
+    temperature: 0.5,
   });
 
-  return generateResponse.body.generations;
+  return generateResponse.body.generations[0].text;
 };
 
 declare type GenerateEmbedding = {
-  texts: string[];
+  data: string;
 };
-export const embed = async ({ texts }: GenerateEmbedding) => {
+export const embed = async ({ data }: GenerateEmbedding) => {
   cohere.init(process.env.COHERE_API_KEY || 'null');
-  const response = await await cohere.embed({ texts: texts });
+  const response = await cohere.embed({ texts: [data] });
+
   return response.body.embeddings[0];
 };

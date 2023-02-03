@@ -45,6 +45,16 @@ export const dataFlowRoutes = () => {
   });
 
   /**
+   * @route   PUT dataFlows/run/:id
+   * @desc    Run a dataFlow by id
+   * @param   req.param.id The dataFlow id
+   * @access  public
+   */
+  router.get('/run/:id', async (req: Request, res: Response) => {
+    dataFlowController.runDataFlowById(req, res);
+  });
+
+  /**
    * @route   DELETE dataFlows/:id
    * @desc    Delete a dataFlow by id
    * @param   req.param.id The dataFlow id

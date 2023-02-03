@@ -3,6 +3,11 @@ import { StatusCodes as statusCodes } from 'http-status-codes';
 // Importing Models
 import { DataFlow } from '../models/_index';
 
+// Importing clients
+import {generate, embed} from '../clients/cohere/Cohere.client'
+import { query } from '../clients/pinecone/Pinecone.client';
+var mongoose = require('mongoose');
+
 /**
  * @route   GET /dataFlows/test
  * @desc    Testing the dataFlows route
@@ -92,6 +97,94 @@ exports.updateDataFlowById = async (req: Request, res: Response) => {
   }
 };
 
+
+const runFunctions = async (nodes) =>{
+  let currentData;
+  for (const node of nodes) {
+
+
+    if(node.type === 'generate'){
+      console.log("RUNNING GEN FOR", currentData||node.data.prompt)
+      currentData = await generate({data:currentData||node.data.prompt})
+      console.log("result of teh generation", currentData)
+
+    }
+    if(node.type === 'embed'){
+      console.log("RUNNING EMBED FOR", node)
+      console.log("WITH THE FOLLOWING DATA", currentData)
+
+      
+      currentData = await embed({data:currentData})
+
+    }
+    if(node.type === 'query'){
+      console.log("RUNNING QUERY FOR", node)
+
+      currentData = await query({filter:currentData})
+      console.log(currentData,"is the current data")
+
+    }
+  }
+  return currentData
+}
+
+/**
+ * @route   PUT /dataflows/run/:id
+ * @desc    Update a dataFlow by id
+ * @param   req.param.id The dataFlow id
+ * @param   req.body The data to be updated for the dataFlow
+ * @access  public
+ */
+exports.runDataFlowById = async (req: Request, res: Response) => {
+  try {
+    const dataFlow = await DataFlow.findOne({});
+
+    
+  
+    const nodes = [
+      {
+        name: 'Generate Node',
+        position: { x: 9999, y: 9999 },
+        type: 'generate',
+        data: { prompt: "How do i improve my sleep" },
+      },
+      {
+        name: 'Embed Node',
+        position: { x: 9999, y: 9999 },
+        type: 'embed',
+      },
+      {
+        name: 'Query Node',
+        position: { x: 9999, y: 9999 },
+        type: 'query',
+        data: { topK: 10 },
+      },
+      {
+        name: 'Generate Node',
+        position: { x: 9999, y: 9999 },
+        type: 'generate',
+
+      },
+    ];
+
+    const result = await runFunctions(nodes)
+    console.log(result, "is the result")
+
+
+    if (!dataFlow) {
+      res
+        .status(statusCodes.NO_CONTENT)
+        .json({ error: 'Unable to find dataFlow.' });
+      return;
+    }
+
+    res.status(statusCodes.OK).json(result);
+  } catch (err) {
+    res
+      .status(statusCodes.INTERNAL_SERVER_ERROR)
+      .json({ error: 'An error occurred while updating dataFlow.', err });
+  }
+};
 /**
  * @route   DELETE /dataFlows/:id
  * @desc    Delete a dataFlow by id
