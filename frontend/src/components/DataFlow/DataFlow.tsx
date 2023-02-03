@@ -11,6 +11,8 @@ import ReactFlow, {
 } from 'reactflow';
 import EndpointNode from './Nodes/EndpointNode/EndpointNode';
 import GenerateNode from './Nodes/GenerateNode/GenerateNode';
+import EmbedNode from './Nodes/EmbedNode/EmbedNode';
+import PineconeDatabaseNode from './Nodes/PineconeDatabaseNode/PineconeDatabaseNode';
 
 import CustomEdge from './CustomEdge';
 import 'reactflow/dist/style.css';
@@ -36,12 +38,13 @@ const initBgColor = '#1A192B';
 const nodeTypes = {
   endpointNode: EndpointNode,
   generateNode: GenerateNode,
+  embedNode: EmbedNode,
+  pineconeDatabaseNode: PineconeDatabaseNode,
 };
 export const DataFlow = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
-  console.log(edges, 'are the edges');
   const [bgColor, setBgColor] = useState(initBgColor);
   const router = useRouter();
   const id = router.query.id;
@@ -90,6 +93,24 @@ export const DataFlow = () => {
         data: { onChange: onChange, color: initBgColor, onConnect: onConnect },
         position: { x: 300, y: 50 },
       },
+      {
+        id: '4',
+        type: 'embedNode',
+        data: { onChange: onChange, color: initBgColor, onConnect: onConnect },
+        position: { x: 300, y: 50 },
+      },
+      {
+        id: '5',
+        type: 'pineconeDatabaseNode',
+        data: { onChange: onChange, color: initBgColor, onConnect: onConnect },
+        position: { x: 300, y: 50 },
+      },
+      {
+        id: '6',
+        type: 'generateNode',
+        data: { onChange: onChange, color: initBgColor, onConnect: onConnect },
+        position: { x: 300, y: 50 },
+      },
     ]);
   }, []);
 
@@ -99,6 +120,7 @@ export const DataFlow = () => {
 
   const onConnect = useCallback(
     (params) => {
+      console.log(params, 'are the params');
       setEdges((eds) =>
         addEdge(
           {

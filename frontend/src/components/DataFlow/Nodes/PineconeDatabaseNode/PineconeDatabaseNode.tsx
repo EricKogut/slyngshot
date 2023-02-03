@@ -1,12 +1,9 @@
 import React, { memo, useEffect, useState } from 'react';
 import { Handle } from 'reactflow';
 
-import RiseLoader from 'react-spinners/RiseLoader';
 import dynamic from 'next/dynamic';
+import { InfoIcon } from '@chakra-ui/icons';
 
-const BaseIDE = dynamic(() => import('components/ide/BaseIDE/BaseIDE'), {
-  ssr: false,
-});
 import {
   Card,
   CardHeader,
@@ -29,11 +26,12 @@ import {
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 
-export const GenerateNode = memo(({ data, isConnectable }) => {
+export const PineconeDatabaseNode = memo(({ data, isConnectable }) => {
   const router = useRouter();
   const { isOpen, onToggle } = useDisclosure();
-  const [temperatureSliderValue, setTemperatureSliderValue] = useState(0.9);
-  const [maxTokensSliderValue, setMaxTokensSliderValue] = useState(100);
+  const [topKSliderValue, setTopKSliderValue] = useState(10);
+  const [matchingScoreSliderValue, setMatchingScoreSliderValue] =
+    useState(0.45);
 
   const [showTooltip, setShowTooltip] = useState(false);
   const id = router.query.id;
@@ -51,7 +49,17 @@ export const GenerateNode = memo(({ data, isConnectable }) => {
     <>
       <Card>
         <CardHeader>
-          <Heading size='sm'>Generate Node</Heading>{' '}
+          <Heading size='sm'>
+            Pinecone Database (Query){' '}
+            <Tooltip
+              label='Total Vectors:
+36579'
+              fontSize='md'
+              placement='top'
+            >
+              <InfoIcon />
+            </Tooltip>
+          </Heading>{' '}
         </CardHeader>
 
         <Handle
@@ -71,14 +79,14 @@ export const GenerateNode = memo(({ data, isConnectable }) => {
         <CardBody>
           <Stack divider={<StackDivider />} spacing='4'>
             <Box>
-              <Text>Temperature </Text>
+              <Text>Top K results </Text>
               <Slider
-                id='temperatureSlider'
+                id='topKSlider'
                 min={0}
-                max={1}
-                step={0.01}
+                max={9999}
+                step={1}
                 colorScheme='blue'
-                onChange={(v) => setTemperatureSliderValue(v)}
+                onChange={(v) => setTopKSliderValue(v)}
                 onMouseEnter={() => setShowTooltip(true)}
                 onMouseLeave={() => setShowTooltip(false)}
               >
@@ -92,7 +100,7 @@ export const GenerateNode = memo(({ data, isConnectable }) => {
                   color='white'
                   placement='top'
                   isOpen={true}
-                  label={`${temperatureSliderValue}`}
+                  label={`${topKSliderValue}`}
                 >
                   <SliderThumb />
                 </Tooltip>
@@ -100,14 +108,14 @@ export const GenerateNode = memo(({ data, isConnectable }) => {
             </Box>
 
             <Box>
-              <Text>Max Tokens </Text>
+              <Text>Matching Score </Text>
               <Slider
                 id='slider'
                 min={0}
-                max={1000}
-                step={1}
+                max={1}
+                step={0.01}
                 colorScheme='blue'
-                onChange={(v) => setMaxTokensSliderValue(v)}
+                onChange={(v) => setMatchingScoreSliderValue(v)}
                 onMouseEnter={() => setShowTooltip(true)}
                 onMouseLeave={() => setShowTooltip(false)}
               >
@@ -121,17 +129,11 @@ export const GenerateNode = memo(({ data, isConnectable }) => {
                   color='white'
                   placement='top'
                   isOpen={true}
-                  label={`${maxTokensSliderValue}`}
+                  label={`${matchingScoreSliderValue}`}
                 >
                   <SliderThumb />
                 </Tooltip>
               </Slider>
-              <Stack spacing={5} direction='row'>
-                <Checkbox isDisabled>large</Checkbox>
-                <Checkbox isDisabled defaultChecked>
-                  command-xlarge-20221108
-                </Checkbox>
-              </Stack>
             </Box>
           </Stack>
         </CardBody>
@@ -140,4 +142,4 @@ export const GenerateNode = memo(({ data, isConnectable }) => {
   );
 });
 
-export default GenerateNode;
+export default PineconeDatabaseNode;
