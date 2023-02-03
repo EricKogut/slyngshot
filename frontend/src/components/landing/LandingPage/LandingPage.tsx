@@ -9,13 +9,15 @@ import {
   Icon,
   useColorModeValue,
   createIcon,
+  Link,
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
+import { ExternalLinkIcon } from '@chakra-ui/icons';
 
 export const LandingPage = () => {
   const router = useRouter();
-  const navigateToLogin = () => {
-    router.push('/login');
+  const navigateToProjectCreation = () => {
+    router.push('/projects/create');
   };
 
   return (
@@ -52,10 +54,9 @@ export const LandingPage = () => {
             </Text>
           </Heading>
           <Text color={'gray.500'}>
-            An all-in-one tool to help companies and developers candidates
-            create model, store data, and streamline their NLP workflow for
-            their whatever their use case to make developing NLP models easy,
-            effective and enjoyable
+            An all-in-one tool to help companies and developers to create
+            models, store data, and streamline their NLP workflow for their use
+            case making developing NLP models easy, effective and enjoyable
           </Text>
           <Stack
             direction={'column'}
@@ -65,7 +66,7 @@ export const LandingPage = () => {
             position={'relative'}
           >
             <Button
-              onClick={navigateToLogin}
+              onClick={navigateToProjectCreation}
               bgGradient='linear(to-l, heroGradientStart, heroGradientEnd)'
               rounded={'full'}
               px={6}
@@ -76,7 +77,12 @@ export const LandingPage = () => {
               Get Started
             </Button>
             <Button variant={'link'} colorScheme={'blue'} size={'sm'}>
-              Learn more
+              <Link
+                href='https://docs.google.com/presentation/d/1MXM1qT88-jfPlcadI3G4bMXR79W5Ol6TpT0JuJ-m7pc/edit?usp=sharing'
+                isExternal
+              >
+                Learn more <ExternalLinkIcon mx='2px' />
+              </Link>
             </Button>
             <Box>
               <Icon

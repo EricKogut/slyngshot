@@ -48,7 +48,7 @@ export const DataFlow = () => {
   const [bgColor, setBgColor] = useState(initBgColor);
   const router = useRouter();
   const id = router.query.id;
-  const address = 'http://localhost:3001/dataflows/' + id;
+  const address = 'http://localhost:3004/dataflows/run/' + id;
   const { onCopy, setValue, hasCopied } = useClipboard(address || '');
 
   useEffect(() => {
@@ -91,25 +91,25 @@ export const DataFlow = () => {
         id: '3',
         type: 'generateNode',
         data: { onChange: onChange, color: initBgColor, onConnect: onConnect },
-        position: { x: 300, y: 50 },
+        position: { x: 1000, y: 75 },
       },
       {
         id: '4',
         type: 'embedNode',
         data: { onChange: onChange, color: initBgColor, onConnect: onConnect },
-        position: { x: 300, y: 50 },
+        position: { x: 1555, y: 87 },
       },
       {
         id: '5',
         type: 'pineconeDatabaseNode',
         data: { onChange: onChange, color: initBgColor, onConnect: onConnect },
-        position: { x: 300, y: 50 },
+        position: { x: 2000, y: 0 },
       },
       {
         id: '6',
         type: 'generateNode',
         data: { onChange: onChange, color: initBgColor, onConnect: onConnect },
-        position: { x: 300, y: 50 },
+        position: { x: 2000, y: 500 },
       },
     ]);
   }, []);

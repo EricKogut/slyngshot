@@ -37,7 +37,7 @@ export const GenerateNode = memo(({ data, isConnectable }) => {
 
   const [showTooltip, setShowTooltip] = useState(false);
   const id = router.query.id;
-  const address = 'http://localhost:3001/dataflows/' + id;
+  const address = 'http://localhost:3004/dataflows/' + id;
 
   //   useEffect(() => {
   //     async function fetchData() {

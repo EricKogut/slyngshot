@@ -9,8 +9,8 @@ export const generate = async ({ data }: GeneratePrompts) => {
 
   const generateResponse = await cohere.generate({
     prompt: data,
-    max_tokens: 200,
-    temperature: 0.5,
+    max_tokens: 150,
+    temperature: 0.1,
   });
 
   return generateResponse.body.generations[0].text;

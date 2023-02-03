@@ -98,35 +98,25 @@ exports.updateDataFlowById = async (req: Request, res: Response) => {
 };
 
 
-const runFunctions = async (nodes) =>{
+const runFunctions = async (nodes) => {
   let currentData;
   for (const node of nodes) {
-
-
-    if(node.type === 'generate'){
-      console.log("RUNNING GEN FOR", currentData||node.data.prompt)
-      currentData = await generate({data:currentData||node.data.prompt})
-      console.log("result of teh generation", currentData)
-
+    if (node.type === 'generate') {
+      console.log('RUNNING GEN FOR', currentData || node.data.prompt);
+      currentData = await generate({ data: currentData || node.data.prompt });
     }
-    if(node.type === 'embed'){
-      console.log("RUNNING EMBED FOR", node)
-      console.log("WITH THE FOLLOWING DATA", currentData)
-
-      
-      currentData = await embed({data:currentData})
-
+    if (node.type === 'embed') {
+      console.log('RUNNING EMBED FOR', node);
+      currentData = await embed({ data: currentData });
     }
-    if(node.type === 'query'){
-      console.log("RUNNING QUERY FOR", node)
+    if (node.type === 'query') {
+      console.log('RUNNING QUERY FOR', node);
 
-      currentData = await query({filter:currentData})
-      console.log(currentData,"is the current data")
-
+      currentData = await query({ filter: currentData });
     }
   }
-  return currentData
-}
+  return currentData;
+};
 
 /**
  * @route   PUT /dataflows/run/:id
@@ -139,37 +129,33 @@ exports.runDataFlowById = async (req: Request, res: Response) => {
   try {
     const dataFlow = await DataFlow.findOne({});
 
-    
-  
     const nodes = [
       {
         name: 'Generate Node',
-        position: { x: 9999, y: 9999 },
+        position: { x: 300, y: 50 },
         type: 'generate',
-        data: { prompt: "How do i improve my sleep" },
+        data: { prompt: 'How do i improve my sleep' },
       },
       {
         name: 'Embed Node',
-        position: { x: 9999, y: 9999 },
+        position: { x: 1000, y: 75 },
         type: 'embed',
       },
       {
         name: 'Query Node',
-        position: { x: 9999, y: 9999 },
+        position: { x: 1555, y: 87 },
         type: 'query',
         data: { topK: 10 },
       },
       {
         name: 'Generate Node',
-        position: { x: 9999, y: 9999 },
+        position: { x: 2000, y: 0 },
         type: 'generate',
-
       },
     ];
 
-    const result = await runFunctions(nodes)
-    console.log(result, "is the result")
-
+    const result = await runFunctions(nodes);
+    console.log(result, 'is the result');
 
     if (!dataFlow) {
       res

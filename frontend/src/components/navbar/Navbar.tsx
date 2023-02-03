@@ -30,8 +30,8 @@ function Navbar() {
   const { colorMode } = useColorMode();
   const [name, setName] = useState('e k');
 
-  const navigateToOrgCreate = () => {
-    router.push('/orgs/create');
+  const navigateToDataFlowCreate = () => {
+    router.push('/dataflows/create');
   };
 
   return (
@@ -89,20 +89,18 @@ function Navbar() {
                 <Avatar size={'sm'} bg='gray' name={name} />
               </MenuButton>
               <MenuList _light={{ bg: 'black' }}>
-                {['Profile', 'Create an Org, Group or Cohort'].map(
-                  (navOption, navOKey) => {
-                    return (
-                      <MenuItem
-                        key={navOKey}
-                        fontSize='sm'
-                        _light={{ bg: 'black', color: 'white' }}
-                        onClick={navigateToOrgCreate}
-                      >
-                        {navOption}
-                      </MenuItem>
-                    );
-                  }
-                )}
+                {['Profile', 'Create a DataFlow'].map((navOption, navOKey) => {
+                  return (
+                    <MenuItem
+                      key={navOKey}
+                      fontSize='sm'
+                      _light={{ bg: 'black', color: 'white' }}
+                      onClick={navigateToDataFlowCreate}
+                    >
+                      {navOption}
+                    </MenuItem>
+                  );
+                })}
               </MenuList>
             </Menu>
             <DarkModeSwitch />

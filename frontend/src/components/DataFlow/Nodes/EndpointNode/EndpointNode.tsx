@@ -31,7 +31,7 @@ export const EndpointNode = memo(({ data, isConnectable }) => {
   const [requestValue, setRequestValue] = useState('');
 
   const id = router.query.id;
-  const address = 'http://localhost:3001/dataflows/' + id;
+  const address = 'http://localhost:3004/dataflows/run/' + id;
 
   const onRequestBodyChange = (value: any, event: any) => {
     setRequestValue(value);
