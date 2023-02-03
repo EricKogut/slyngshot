@@ -19,7 +19,7 @@ import {
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 
-export default memo(({ data, isConnectable }) => {
+export const EndpointNode = memo(({ data, isConnectable }) => {
   const router = useRouter();
   const id = router.query.id;
   const address = 'http://localhost:3001/dataflows/' + id;
@@ -43,47 +43,15 @@ export default memo(({ data, isConnectable }) => {
         </CardHeader>
 
         <CardBody>
-          {/* <Stack divider={<StackDivider />} spacing='1'>
-            <Box>
-              <Heading size='xs' textTransform='uppercase'>
-                Overview
-              </Heading>
-              <Text pt='2' fontSize='sm'>
-                Check out the overview of your clients.
-              </Text>
-            </Box>
-            <Box>
-              <Heading size='xs' textTransform='uppercase'>
-                Analysis
-              </Heading>
-              <Text pt='2' fontSize='sm'>
-                See a detailed analysis of all your business clients.
-              </Text>
-            </Box>
-          </Stack> */}
           <Tag size='sm' variant='subtle' colorScheme='blue'>
             <TagLabel>{address}</TagLabel>
           </Tag>
-          <Handle
-            type='target'
-            position='left'
-            style={{ background: '#555' }}
-            onConnect={(params) => console.log('on connect triggered')}
-            isConnectable={isConnectable}
-          />
 
           <Handle
             type='source'
             position='right'
-            id='a'
-            style={{ top: 10, background: '#555' }}
-            isConnectable={isConnectable}
-          />
-          <Handle
-            type='source'
-            position='right'
-            id='b'
-            style={{ bottom: 10, top: 'auto', background: '#555' }}
+            id={address}
+            // style={{ bottom: 27, top: 'auto', background: '#555' }}
             isConnectable={isConnectable}
           />
         </CardBody>
@@ -91,3 +59,5 @@ export default memo(({ data, isConnectable }) => {
     </>
   );
 });
+
+export default EndpointNode;

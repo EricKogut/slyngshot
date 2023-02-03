@@ -9,7 +9,8 @@ import ReactFlow, {
   MarkerType,
   addEdge,
 } from 'reactflow';
-import ColorSelectorNode from './ColourSelectorNode';
+import EndpointNode from './Nodes/EndpointNode/EndpointNode';
+
 import CustomEdge from './CustomEdge';
 import 'reactflow/dist/style.css';
 import { Toolbar } from './Toolbar';
@@ -32,7 +33,7 @@ import { useRouter } from 'next/router';
 const initBgColor = '#1A192B';
 
 const nodeTypes = {
-  selectorNode: ColorSelectorNode,
+  endpointNode: EndpointNode,
 };
 export const DataFlow = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
@@ -75,74 +76,25 @@ export const DataFlow = () => {
 
     setNodes([
       {
-        id: '1',
-        // type: 'input',
-        data: { label: 'An input node' },
-        position: { x: 0, y: 50 },
-        sourcePosition: 'right',
-      },
-      {
         id: '2',
-        type: 'selectorNode',
+        type: 'endpointNode',
         data: { onChange: onChange, color: initBgColor, onConnect: onConnect },
-        style: { border: '1px solid #777', padding: 10 },
         position: { x: 300, y: 50 },
       },
-      {
-        id: '3',
-        // type: 'output',
-        data: { label: 'Output A' },
-        position: { x: 650, y: 25 },
-        targetPosition: 'left',
-      },
-      {
-        id: '4',
-        // type: 'output',
-        data: { label: 'Output B' },
-        position: { x: 650, y: 100 },
-        targetPosition: 'left',
-      },
     ]);
-
-    setEdges([
-      // {
-      //   id: 'e1-2',
-      //   source: '1',
-      //   target: '2',
-      //   animated: true,
-      //   type: 'edgeWithButton',
-      //   style: { stroke: '#fff' },
-      // },
-      // {
-      //   id: 'e2a-3',
-      //   source: '2',
-      //   target: '3',
-      //   sourceHandle: 'a',
-      //   animated: true,
-      //   style: { stroke: '#fff' },
-      // },
-      // {
-      //   id: 'e2b-4',
-      //   source: '2',
-      //   target: '4',
-      //   sourceHandle: 'b',
-      //   animated: true,
-      //   style: { stroke: '#fff' },
-      // },
-    ]);
+    setEdges([]);
   }, []);
 
   const edgeTypes = {
-    edgeWithButton: CustomEdge,
+    activeEdge: CustomEdge,
   };
   const onConnect = useCallback(
     (params) => {
-      console.log(params, 'are the params');
       setEdges((eds) =>
         addEdge(
           {
             ...params,
-            type: 'edgeWithButton',
+            type: 'activeEdge',
             markerEnd: { type: MarkerType.ArrowClosed },
             style: { strokeWidth: 2 },
             data: { setEdges },
