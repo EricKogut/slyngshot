@@ -1,1 +1,1 @@
-export { GenerateNode } from './GenerateNode';
+export { GenerateNode } from './GenerateNoded';

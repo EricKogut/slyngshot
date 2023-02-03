@@ -10,6 +10,7 @@ import ReactFlow, {
   addEdge,
 } from 'reactflow';
 import EndpointNode from './Nodes/EndpointNode/EndpointNode';
+import GenerateNode from './Nodes/GenerateNode/GenerateNode';
 
 import CustomEdge from './CustomEdge';
 import 'reactflow/dist/style.css';
@@ -34,10 +35,13 @@ const initBgColor = '#1A192B';
 
 const nodeTypes = {
   endpointNode: EndpointNode,
+  generateNode: GenerateNode,
 };
 export const DataFlow = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+
+  console.log(edges, 'are the edges');
   const [bgColor, setBgColor] = useState(initBgColor);
   const router = useRouter();
   const id = router.query.id;
@@ -49,7 +53,6 @@ export const DataFlow = () => {
       setValue(address);
     }
   }, [address, setValue]);
-  const placeholder = 'text to be copied...';
 
   const copyLink = useEffect(() => {
     const onChange = (event: any) => {
@@ -81,13 +84,19 @@ export const DataFlow = () => {
         data: { onChange: onChange, color: initBgColor, onConnect: onConnect },
         position: { x: 300, y: 50 },
       },
+      {
+        id: '3',
+        type: 'generateNode',
+        data: { onChange: onChange, color: initBgColor, onConnect: onConnect },
+        position: { x: 300, y: 50 },
+      },
     ]);
-    setEdges([]);
   }, []);
 
   const edgeTypes = {
     activeEdge: CustomEdge,
   };
+
   const onConnect = useCallback(
     (params) => {
       setEdges((eds) =>
@@ -106,6 +115,8 @@ export const DataFlow = () => {
     },
     [setEdges]
   );
+
+  console.log(edges, 'are the edges');
 
   return (
     <Container height='100vh'>

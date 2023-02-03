@@ -1,8 +1,12 @@
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
 import { Handle } from 'reactflow';
 
 import RiseLoader from 'react-spinners/RiseLoader';
+import dynamic from 'next/dynamic';
 
+const BaseIDE = dynamic(() => import('components/ide/BaseIDE/BaseIDE'), {
+  ssr: false,
+});
 import {
   Card,
   CardHeader,
@@ -16,14 +20,22 @@ import {
   Button,
   Tag,
   TagLabel,
+  Collapse,
+  useDisclosure,
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 
 export const EndpointNode = memo(({ data, isConnectable }) => {
   const router = useRouter();
+  const { isOpen, onToggle } = useDisclosure();
+  const [requestValue, setRequestValue] = useState('');
+
   const id = router.query.id;
   const address = 'http://localhost:3001/dataflows/' + id;
-  console.log(data.onConnect);
+
+  const onRequestBodyChange = (value: any, event: any) => {
+    setRequestValue(value);
+  };
   return (
     <>
       <Card>
@@ -31,6 +43,13 @@ export const EndpointNode = memo(({ data, isConnectable }) => {
           <Heading size='sm'>Endpoint</Heading>{' '}
           <Box>
             <Text pt='2' fontSize='sm'>
+              <Button onClick={onToggle}>Edit request body</Button>
+              <Collapse in={isOpen} animateOpacity>
+                <BaseIDE
+                  onRequestBodyChange={onRequestBodyChange}
+                  requestValue={requestValue}
+                />
+              </Collapse>
               <Button
                 isLoading={false}
                 colorScheme='gray'
